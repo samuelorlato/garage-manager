@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class StoreGarageRequest extends FormRequest
+class UpdateVehicleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,13 +12,6 @@ class StoreGarageRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
-    }
-
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'user_id' => Auth::id(),
-        ]);
     }
 
     /**
@@ -30,10 +22,11 @@ class StoreGarageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'address' => ['required', 'string'],
-            'capacity' => ['required', 'integer'],
-            'user_id' => ['required', 'uuid', 'exists:users,id']
+            'license_plate' => ['nullable', 'string', 'regex:/^([A-Z]{3}[0-9]{4})$|^([A-Z]{3}[0-9][A-Z][0-9]{2})$/'],
+            'brand' => ['nullable', 'string'],
+            'model' => ['nullable', 'string'],
+            'year' => ['nullable', 'integer'],
+            'color' => ['nullable', 'string'],
         ];
     }
 }

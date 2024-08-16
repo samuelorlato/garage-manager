@@ -38,7 +38,7 @@ class AuthController extends Controller
     {
         $validatedData = $request->validated();
 
-        $user = User::create($validatedData);
+        User::create($validatedData);
 
         return redirect('/login')->with([
             'status' => 'Account created successfully! Sign in below.'

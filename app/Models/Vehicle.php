@@ -12,6 +12,8 @@ class Vehicle extends Model
 
     public $incrementing = false;
 
+    protected $primaryKey = 'license_plate';
+
     protected $fillable = [
         'license_plate',
         'brand',
@@ -19,6 +21,8 @@ class Vehicle extends Model
         'year',
         'color',
         'garage_id',
+        'user_id',
+        'in_garage_since'
     ];
 
     protected $hidden = [

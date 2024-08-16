@@ -25,14 +25,14 @@
         <div class="p-6 border rounded-md sm:mx-auto sm:w-full sm:max-w-4xl mt-4">
             <div class="flex flex-row items-center justify-between">
                 <p class="block text-lg font-semibold leading-6 text-black">
-                    Create a new garage
+                    Add a new vehicle to your garage
                 </p>
                 <a class="flex justify-center text-sm underline font-medium leading-6 text-black hover:text-neutral-800 transition-colors"
-                    href="/">Back</a>
+                    href="/garage/{{ $garage_id }}">Back</a>
             </div>
             <div class="mt-4">
                 <div class="flex flex-col gap-3 max-h-96 overflow-y-auto -mx-3 px-3">
-                    <form class="space-y-6" action="/new/garage" method="POST">
+                    <form class="space-y-6" action="/new/vehicle/{{ $garage_id }}" method="POST">
                         @csrf
 
                         @if ($errors->any())
@@ -46,27 +46,43 @@
                         @endif
 
                         <div>
-                            <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
+                            <label for="license_plate" class="block text-sm font-medium leading-6 text-gray-900">License
+                                plate</label>
                             <div class="mt-2">
-                                <input id="name" name="name" type="text" autocomplete="name" required
+                                <input id="license_plate" name="license_plate" type="text" required
+                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm px-2 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
+                                    placeholder="ABC1234 or ABC1D23">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="brand" class="block text-sm font-medium leading-6 text-gray-900">Brand</label>
+                            <div class="mt-2">
+                                <input id="brand" name="brand" type="text" required
                                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm px-2 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6">
                             </div>
                         </div>
 
                         <div>
-                            <label for="address"
-                                class="block text-sm font-medium leading-6 text-gray-900">Address</label>
+                            <label for="model" class="block text-sm font-medium leading-6 text-gray-900">Model</label>
                             <div class="mt-2">
-                                <input id="address" name="address" type="text" autocomplete="address-level1" required
+                                <input id="model" name="model" type="text" required
                                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm px-2 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6">
                             </div>
                         </div>
 
                         <div>
-                            <label for="capacity"
-                                class="block text-sm font-medium leading-6 text-gray-900">Capacity</label>
+                            <label for="year" class="block text-sm font-medium leading-6 text-gray-900">Year</label>
                             <div class="mt-2">
-                                <input id="capacity" name="capacity" type="number" required
+                                <input id="year" name="year" type="number" required
+                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm px-2 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="color" class="block text-sm font-medium leading-6 text-gray-900">Color</label>
+                            <div class="mt-2">
+                                <input id="color" name="color" type="text" required
                                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm px-2 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6">
                             </div>
                         </div>

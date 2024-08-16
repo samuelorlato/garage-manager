@@ -32,15 +32,11 @@ class GarageController extends Controller
     public function store(StoreGarageRequest $request)
     {
         if (Auth::check()) {
-            $user_id = Auth::id();
-
-            $request['user_id'] = $user_id;
-
             $validatedData = $request->validated();
 
             Garage::create($validatedData);
 
-            return $this->index();
+            return redirect('/');
         }
     }
 
@@ -58,10 +54,13 @@ class GarageController extends Controller
         }
     }
 
-    public function edit()
+    public function edit($id, $name)
     {
         if (Auth::check()) {
-            return view('app.garage.edit');
+            return view('app.garage.edit')->with([
+                'garage_id' => $id,
+                'garage_name' => $name
+            ]);
         }
     }
 
@@ -70,14 +69,14 @@ class GarageController extends Controller
         if (Auth::check()) {
             $user_id = Auth::id();
 
-            $validatedData = $request->validated();
+            $validatedData = array_filter($request->validated());
 
             Garage::where([
                 ['user_id', $user_id],
                 ['id', $id]
             ])->first()->update($validatedData);
 
-            return $this->index();
+            return redirect('/');
         }
     }
 
@@ -93,7 +92,7 @@ class GarageController extends Controller
 
             Garage::destroy($garage->id);
 
-            return $this->index();
+            return redirect('/');
         }
     }
 }
