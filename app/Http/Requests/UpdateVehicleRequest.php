@@ -22,11 +22,14 @@ class UpdateVehicleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'license_plate' => ['nullable', 'string', 'regex:/^([A-Z]{3}[0-9]{4})$|^([A-Z]{3}[0-9][A-Z][0-9]{2})$/'],
-            'brand' => ['nullable', 'string'],
-            'model' => ['nullable', 'string'],
-            'year' => ['nullable', 'integer'],
-            'color' => ['nullable', 'string'],
+            'license_plate' => ['required', 'string', 'regex:/^([A-Z]{3}[0-9]{4})$|^([A-Z]{3}[0-9][A-Z][0-9]{2})$/'],
+            'brand' => ['required', 'string'],
+            'model' => ['required', 'string'],
+            'year' => ['required', 'integer'],
+            'color' => ['required', 'string'],
+            'garage_id' => ['nullable', 'uuid', 'exists:garages,id'],
+            'user_id' => ['required', 'uuid', 'exists:users,id'],
+            'in_garage_since' => ['nullable', 'date']
         ];
     }
 }

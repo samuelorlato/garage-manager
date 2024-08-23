@@ -16,15 +16,6 @@ class StoreVehicleRequest extends FormRequest
         return true;
     }
 
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'garage_id' => $this->route('garage_id'),
-            'user_id' => Auth::id(),
-            'in_garage_since' => now()->format('Y-m-d'),
-        ]);
-    }
-
 
     /**
      * Get the validation rules that apply to the request.
@@ -39,21 +30,9 @@ class StoreVehicleRequest extends FormRequest
             'model' => ['required', 'string'],
             'year' => ['required', 'integer'],
             'color' => ['required', 'string'],
-            'garage_id' => ['required', 'uuid', 'exists:garages,id'],
+            'garage_id' => ['nullable', 'uuid', 'exists:garages,id'],
             'user_id' => ['required', 'uuid', 'exists:users,id'],
-            'in_garage_since' => ['required', 'date']
+            'in_garage_since' => ['nullable', 'date']
         ];
-    }
-
-
-    protected function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            $garage = Garage::find($this->garage_id);
-
-            if ($garage && $garage->vehicles()->count() == $garage->capacity) {
-                $validator->errors()->add('garage_id', 'The garage is already full.');
-            }
-        });
     }
 }

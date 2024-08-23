@@ -15,13 +15,6 @@ class StoreGarageRequest extends FormRequest
         return true;
     }
 
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'user_id' => Auth::id(),
-        ]);
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *

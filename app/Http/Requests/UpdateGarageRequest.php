@@ -16,14 +16,6 @@ class UpdateGarageRequest extends FormRequest
         return true;
     }
 
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'id' => $this->route('id'),
-            'user_id' => Auth::id(),
-        ]);
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -32,25 +24,9 @@ class UpdateGarageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['nullable', 'string'],
-            'address' => ['nullable', 'string'],
-            'capacity' => ['nullable', 'integer']
+            'name' => ['required', 'string'],
+            'address' => ['required', 'string'],
+            'capacity' => ['required', 'integer']
         ];
-    }
-
-    protected function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            $garage = Garage::where([
-                ['user_id', $this->user_id],
-                ['id', $this->id]
-            ])->withCount('vehicles')->first();
-
-            $currentVehicleCount = $garage->vehicles_count;
-
-            if ($this->capacity < $currentVehicleCount) {
-                $validator->errors()->add('capacity', 'The capacity cannot be less than the number of vehicles already in the garage.');
-            }
-        });
     }
 }

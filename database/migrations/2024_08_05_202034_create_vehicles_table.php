@@ -16,8 +16,8 @@ return new class extends Migration {
             $table->string('model');
             $table->integer('year');
             $table->string('color');
-            $table->foreignUuid('garage_id')->constrained();
-            $table->timestamp('in_garage_since');
+            $table->foreignUuid('garage_id')->nullable()->constrained();
+            $table->timestamp('in_garage_since')->nullable();
             $table->foreignUuid('user_id')->constrained();
             $table->timestamps();
         });
