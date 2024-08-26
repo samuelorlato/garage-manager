@@ -39,8 +39,12 @@
                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm px-2 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6">
                                 <option selected value="">None</option>
                                 @foreach ($garages as $garage)
-                                    @if ($garage->vehicles_count < $garage->capacity)
+                                    @if ($garage->id === $vehicle->garage_id)
                                         <option value="{{ $garage->id }}">{{ $garage->name }} at {{ $garage->address }}</option>
+                                    @else
+                                        @if ($garage->vehicles_count < $garage->capacity)
+                                            <option value="{{ $garage->id }}">{{ $garage->name }} at {{ $garage->address }}</option>
+                                        @endif
                                     @endif
                                 @endforeach
                             </select>

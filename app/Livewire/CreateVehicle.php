@@ -16,8 +16,8 @@ class CreateVehicle extends Component
     public string $model;
     public int $year;
     public string $color;
-    public string $garage_id;
-    public string $in_garage_since;
+    public ?string $garage_id = null;
+    public ?string $in_garage_since = null;
 
     public Collection $garages;
 
@@ -32,6 +32,9 @@ class CreateVehicle extends Component
     {
         if ($attributes['garage_id']) {
             $attributes['in_garage_since'] = now()->format('Y-m-d');
+        } else {
+            $attributes['garage_id'] = null;
+            $attributes['in_garage_since'] = null;
         }
 
         return $attributes;

@@ -18,8 +18,8 @@ class EditVehicle extends Component
     public string $model;
     public int $year;
     public string $color;
-    public string $garage_id;
-    public string $in_garage_since;
+    public ?string $garage_id = null;
+    public ?string $in_garage_since = null;
 
     public Vehicle $vehicle;
 
@@ -38,6 +38,9 @@ class EditVehicle extends Component
     {
         if ($attributes['garage_id']) {
             $attributes['in_garage_since'] = now()->format('Y-m-d');
+        } else {
+            $attributes['garage_id'] = null;
+            $attributes['in_garage_since'] = null;
         }
 
         return $attributes;
@@ -47,11 +50,9 @@ class EditVehicle extends Component
     {
         $validated = $this->validate();
 
-        if ($validated['garage_id'] === '') {
-            $validated['garage_id'] = null;
-        } else {
-            $garage = Garage::find($this->garage_id);
+        $garage = Garage::find($this->garage_id);
 
+        if ($garage->id !== $this->vehicle->garage_id) {
             if ($garage && $garage->vehicles()->count() == $garage->capacity) {
                 $this->addError('garage_id', 'The garage is already full.');
                 return;
@@ -87,7 +88,7 @@ class EditVehicle extends Component
     {
         $this->vehicle = Vehicle::where([
             ['user_id', $this->user_id],
-            ['license_plate', $this->license_plate]
+            ['license_plate', $this->old_license_plate]
         ])->first();
 
         $this->brand = $this->vehicle->brand;

@@ -9,8 +9,8 @@
                     href="/" wire:navigate>Back</a>
             </div>
         </div>
-        <p class="leading-6 text-black">Vehicles: {{ $garage->vehicles_count }}/{{ $garage->capacity }}</p>
         <p class="leading-6 text-black">Address: {{ $garage->address }}</p>
+        <p class="leading-6 text-black">Vehicles: {{ $garage->vehicles_count }}/{{ $garage->capacity }}</p>
 
         @if ($garage->vehicles()->count() < $garage->capacity)
             <div class="mt-4">
