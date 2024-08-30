@@ -40,14 +40,24 @@ class ShowGarage extends Component
 
     public function render()
     {
-        $this->garage = Garage::where([
-            ['user_id', $this->user_id],
-            ['id', $this->id]
-        ])->withCount('vehicles')->first();
+        if (Auth::user()->is_admin) {
+            $this->garage = Garage::where([
+                ['id', $this->id]
+            ])->with(['user'])->withCount('vehicles')->first();
 
-        $this->vehicles = Vehicle::where([
-            ['user_id', $this->user_id]
-        ])->get();
+            $this->vehicles = Vehicle::where([
+                ['user_id', $this->garage->user->id]
+            ])->get();
+        } else {
+            $this->garage = Garage::where([
+                ['user_id', $this->user_id],
+                ['id', $this->id]
+            ])->withCount('vehicles')->first();
+
+            $this->vehicles = Vehicle::where([
+                ['user_id', $this->user_id]
+            ])->get();
+        }
 
         return view('livewire.show-garage');
     }

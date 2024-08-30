@@ -23,10 +23,16 @@ class ShowVehicle extends Component
 
     public function render()
     {
-        $this->vehicle = Vehicle::where([
-            ['user_id', $this->user_id],
-            ['license_plate', $this->license_plate]
-        ])->first();
+        if (Auth::user()->is_admin) {
+            $this->vehicle = Vehicle::where([
+                ['license_plate', $this->license_plate]
+            ])->with(['user'])->first();
+        } else {
+            $this->vehicle = Vehicle::where([
+                ['user_id', $this->user_id],
+                ['license_plate', $this->license_plate]
+            ])->first();
+        }
 
         return view('livewire.show-vehicle');
     }

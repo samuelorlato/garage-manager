@@ -1,5 +1,5 @@
 <div>
-    <div class="p-6 border rounded-md sm:mx-auto sm:w-full sm:max-w-4xl mt-4">
+    <div class="p-6 border rounded-md sm:mx-auto sm:w-full sm:max-w-6xl mt-4">
         <div class="flex flex-row items-center justify-between">
             <p class="block text-lg font-semibold leading-6 text-black">
                 Editing garage {{ $garage->name }}

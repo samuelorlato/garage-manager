@@ -52,7 +52,7 @@ class EditVehicle extends Component
 
         $garage = Garage::find($this->garage_id);
 
-        if ($garage->id !== $this->vehicle->garage_id) {
+        if ($garage && $garage->id !== $this->vehicle->garage_id) {
             if ($garage && $garage->vehicles()->count() == $garage->capacity) {
                 $this->addError('garage_id', 'The garage is already full.');
                 return;

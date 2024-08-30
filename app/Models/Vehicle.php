@@ -33,4 +33,9 @@ class Vehicle extends Model
     {
         return $this->belongsTo(Garage::class);
     }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

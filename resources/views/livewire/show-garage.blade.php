@@ -1,5 +1,5 @@
 <div>
-    <div class="p-6 border rounded-md sm:mx-auto sm:w-full sm:max-w-4xl mt-4">
+    <div class="p-6 border rounded-md sm:mx-auto sm:w-full sm:max-w-6xl mt-4">
         <div class="flex flex-row items-center justify-between">
             <p class="block text-lg font-semibold leading-6 text-black">
                 Seeing garage {{ $garage->name }}
@@ -12,12 +12,12 @@
         <p class="leading-6 text-black">Address: {{ $garage->address }}</p>
         <p class="leading-6 text-black">Vehicles: {{ $garage->vehicles_count }}/{{ $garage->capacity }}</p>
 
-        @if ($garage->vehicles()->count() < $garage->capacity)
+        @if ($garage->vehicles()->count() < $garage->capacity && !Auth::user()->is_admin)
             <div class="mt-4">
                 <label for="vehicle_license_plate" class="block text-sm font-medium leading-6 text-gray-900">Add a new
                     vehicle to this
                     garage</label>
-                <div class="">
+                <div>
                     <form class="flex flex-row gap-2" wire:submit="save"
                         wire:confirm="Are you sure you want to move the vehicle {{ $vehicle_license_plate }} to this garage?">
                         <select id="vehicle_license_plate" name="vehicle_license_plate"
@@ -61,8 +61,12 @@
                             </div>
                             <div>Model: {{ $vehicle->model }}</div>
                             <div>
-                                <a class="flex justify-center text-sm underline font-medium leading-6 text-black group-hover:text-white transition-colors"
-                                    href="/edit/vehicle/{{ $vehicle->license_plate }}">Edit</a>
+                                @if (Auth::user()->is_admin)
+                                    <p>User: {{ $garage->user->name }}</p>
+                                @else
+                                    <a class="flex justify-center text-sm underline font-medium leading-6 text-black group-hover:text-white transition-colors"
+                                        href="/edit/vehicle/{{ $vehicle->license_plate }}">Edit</a>
+                                @endif
                             </div>
                         </div>
                     </li>
